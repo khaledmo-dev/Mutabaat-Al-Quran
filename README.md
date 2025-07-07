@@ -10,13 +10,12 @@ Mutabaat Al‑Qur’an helps you deepen your Qur’an study with two core module
 
 ## 📷 Screenshots
 
-| Feature                     | Screenshot                                        |
-|-----------------------------|---------------------------------------------------|
-| Create Test Template        | ![Template Setup](assets/images/template.png)     |
-| Live Quiz Flow              | ![Live Quiz](assets/images/quiz.png)              |
-| Results History             | ![Results History](assets/images/history.png)     |
-| Weekly Planner (Week View)  | ![Week Planner](assets/images/week.png)           |
-| Monthly Commitment Dashboard| ![Monthly Dashboard](assets/images/month.png)     |
+Home Screen                                  |  Weekly Table Screen                       |  Activity Details Screen |  
+:-------------------------------------------:|:---------------------------------------------:|:---------------------------------------------:
+![](https://i.ibb.co/bjPHp0Tx/home.jpg)|  ![](https://i.ibb.co/svzCqfFP/table.jpg) |  ![](https://i.ibb.co/CsKcfRfn/activity-details.jpg) 
+Test Screen                                  |  Hijri Date Calendar                                 |  Results Screen                                 
+:-------------------------------------------:|:---------------------------------------------:|:---------------------------------------------:
+![](https://i.ibb.co/LhqXnDtj/test.jpg)  |  ![](https://i.ibb.co/99bSBCd8/hijri-calendar.jpg) |  ![](https://i.ibb.co/k2Hy5ccL/results.jpg)
 
 ---
 
@@ -27,8 +26,6 @@ Mutabaat Al‑Qur’an helps you deepen your Qur’an study with two core module
   Pick any range of Qur’anic verses to quiz yourself on.
 - **Reusable Templates**  
   Save frequently used ranges as “Test Templates” for one‑tap quiz creation.
-- **Live Quiz Flow**  
-  For each question, mark ✔️ correct or ❌ incorrect, then move on seamlessly.
 - **Results History**  
   View, filter, and compare all past quiz results in a dedicated “History” screen.
 
@@ -37,23 +34,9 @@ Mutabaat Al‑Qur’an helps you deepen your Qur’an study with two core module
   Switch effortlessly between **Hijri** and **Gregorian** date views.
 - **Schedule Practice Days**  
   Pre‑select days for reading, memorization, revision, or any custom activity.
-- **One‑Tap Completion**  
-  Mark tasks done/undone in the weekly table with a single tap.
+- **Record Your Progress**  
+  Record the Ayat the you have read in specific day on the table.
 - **Monthly Commitment Dashboard**  
   Visualize completed vs. missed days on a month‑view calendar and track your overall adherence percentage.
 
 ---
-
-## 📦 Getting Started
-
-### Prerequisites
-- **Flutter SDK** ≥ 3.0
-- **Dart** ≥ 2.18
-- An Android or iOS device/emulator
-
-### Installation
-
-1. **Clone the repository**  
-   ```bash
-   git clone https://github.com/YourUsername/Mutabaat-AlQuran.git
-   cd Mutabaat-AlQuran
