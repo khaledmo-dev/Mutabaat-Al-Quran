@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:heroicons/heroicons.dart';
 import 'package:quran_test/app/app.locator.dart';
 import 'package:quran_test/services/localization_service.dart';
 import 'package:quran_test/services/table_service.dart';
 import 'package:quran_test/surahs.dart';
+import 'package:quran_test/ui/common/app_colors.dart';
 import 'package:quran_test/ui/common/base_button.dart';
 import 'package:quran_test/ui/common/rating_sheet.dart';
 import 'package:quran_test/ui/common/ui_helpers.dart';
@@ -77,7 +79,11 @@ class _EntryFormState extends State<EntryForm> {
                           records.remove(e);
                         });
                       },
-                      icon: const Icon(Icons.delete),
+                      icon: const HeroIcon(
+                        HeroIcons.trash,
+                        color: kcErrorColor,
+                        style: HeroIconStyle.solid,
+                      ),
                     )
                   ],
                 );
