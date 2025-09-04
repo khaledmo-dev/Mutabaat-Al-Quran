@@ -8,7 +8,7 @@ import 'package:stacked_services/stacked_services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 var languageNotifier = ValueNotifier('ar');
-var themeNotifier = ValueNotifier(false);
+var themeNotifier = ValueNotifier<bool?>(null);
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -49,7 +49,11 @@ class MainApp extends StatelessWidget {
                 textTheme: AppTheme.dark.textTheme
                     .apply(fontFamily: isRTL ? 'cairo' : 'poppins'),
               ),
-              themeMode: themeValue ? ThemeMode.dark : ThemeMode.light,
+              themeMode: themeValue == null
+                  ? ThemeMode.system
+                  : themeValue
+                      ? ThemeMode.dark
+                      : ThemeMode.light,
               supportedLocales: const [
                 Locale("en"),
                 Locale("ar"),

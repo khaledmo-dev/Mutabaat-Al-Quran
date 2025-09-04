@@ -87,5 +87,7 @@
   "export_success": "Data berhasil diekspor.",
   "export_failed": "Gagal mengekspor data. Silakan coba lagi.",
   "success": "Berhasil.",
-  "error": "Terjadi kesalahan."
+  "error": "Terjadi kesalahan.",
+  "choose_lang": "Pilih Bahasa",
+  "dark_theme": "Tema Gelap"
 }

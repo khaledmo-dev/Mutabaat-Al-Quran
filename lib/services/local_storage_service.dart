@@ -69,6 +69,16 @@ class LocalStorageService
     _saveToDisk(isHijriKey, isHijri);
   }
 
+  static const String isFirstOpenKey = 'is_first';
+
+  bool get isFirstOpen {
+    return _getFromDisk(isFirstOpenKey) ?? true;
+  }
+
+  set isFirstOpen(bool isFirstOpen) {
+    _saveToDisk(isFirstOpenKey, isFirstOpen);
+  }
+
   static const String hasRatedKey = 'has_rated';
 
   bool get hasRated {

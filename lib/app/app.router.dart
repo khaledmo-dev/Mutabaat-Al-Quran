@@ -5,13 +5,14 @@
 // **************************************************************************
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:flutter/material.dart' as _i11;
+import 'package:flutter/material.dart' as _i12;
 import 'package:flutter/material.dart';
 import 'package:quran_test/ui/views/activity_details/activity_details_view.dart'
     as _i9;
 import 'package:quran_test/ui/views/home/home_view.dart' as _i2;
 import 'package:quran_test/ui/views/main/main_view.dart' as _i5;
 import 'package:quran_test/ui/views/more/more_view.dart' as _i10;
+import 'package:quran_test/ui/views/onboarding/onboarding_view.dart' as _i11;
 import 'package:quran_test/ui/views/result_details/result_details_view.dart'
     as _i8;
 import 'package:quran_test/ui/views/results/results_view.dart' as _i7;
@@ -19,7 +20,7 @@ import 'package:quran_test/ui/views/startup/startup_view.dart' as _i3;
 import 'package:quran_test/ui/views/table/table_view.dart' as _i6;
 import 'package:quran_test/ui/views/test/test_view.dart' as _i4;
 import 'package:stacked/stacked.dart' as _i1;
-import 'package:stacked_services/stacked_services.dart' as _i12;
+import 'package:stacked_services/stacked_services.dart' as _i13;
 
 class Routes {
   static const homeView = '/home-view';
@@ -40,6 +41,8 @@ class Routes {
 
   static const moreView = '/more-view';
 
+  static const onboardingView = '/onboarding-view';
+
   static const all = <String>{
     homeView,
     startupView,
@@ -50,6 +53,7 @@ class Routes {
     resultDetailsView,
     activityDetailsView,
     moreView,
+    onboardingView,
   };
 }
 
@@ -91,64 +95,74 @@ class StackedRouter extends _i1.RouterBase {
       Routes.moreView,
       page: _i10.MoreView,
     ),
+    _i1.RouteDef(
+      Routes.onboardingView,
+      page: _i11.OnboardingView,
+    ),
   ];
 
   final _pagesMap = <Type, _i1.StackedRouteFactory>{
     _i2.HomeView: (data) {
-      return _i11.MaterialPageRoute<dynamic>(
+      return _i12.MaterialPageRoute<dynamic>(
         builder: (context) => const _i2.HomeView(),
         settings: data,
       );
     },
     _i3.StartupView: (data) {
-      return _i11.MaterialPageRoute<dynamic>(
+      return _i12.MaterialPageRoute<dynamic>(
         builder: (context) => const _i3.StartupView(),
         settings: data,
       );
     },
     _i4.TestView: (data) {
       final args = data.getArgs<TestViewArguments>(nullOk: false);
-      return _i11.MaterialPageRoute<dynamic>(
+      return _i12.MaterialPageRoute<dynamic>(
         builder: (context) =>
             _i4.TestView(args.range, key: args.key, testId: args.testId),
         settings: data,
       );
     },
     _i5.MainView: (data) {
-      return _i11.MaterialPageRoute<dynamic>(
+      return _i12.MaterialPageRoute<dynamic>(
         builder: (context) => const _i5.MainView(),
         settings: data,
       );
     },
     _i6.TableView: (data) {
-      return _i11.MaterialPageRoute<dynamic>(
+      return _i12.MaterialPageRoute<dynamic>(
         builder: (context) => const _i6.TableView(),
         settings: data,
       );
     },
     _i7.ResultsView: (data) {
-      return _i11.MaterialPageRoute<dynamic>(
+      return _i12.MaterialPageRoute<dynamic>(
         builder: (context) => const _i7.ResultsView(),
         settings: data,
       );
     },
     _i8.ResultDetailsView: (data) {
       final args = data.getArgs<ResultDetailsViewArguments>(nullOk: false);
-      return _i11.MaterialPageRoute<dynamic>(
+      return _i12.MaterialPageRoute<dynamic>(
         builder: (context) => _i8.ResultDetailsView(args.id, key: args.key),
         settings: data,
       );
     },
     _i9.ActivityDetailsView: (data) {
       final args = data.getArgs<ActivityDetailsViewArguments>(nullOk: false);
-      return _i11.MaterialPageRoute<dynamic>(
+      return _i12.MaterialPageRoute<dynamic>(
         builder: (context) => _i9.ActivityDetailsView(args.id, key: args.key),
         settings: data,
       );
     },
     _i10.MoreView: (data) {
-      return _i11.MaterialPageRoute<dynamic>(
+      return _i12.MaterialPageRoute<dynamic>(
         builder: (context) => const _i10.MoreView(),
+        settings: data,
+      );
+    },
+    _i11.OnboardingView: (data) {
+      return _i12.MaterialPageRoute<dynamic>(
+        builder: (context) => const _i11.OnboardingView(),
         settings: data,
       );
     },
@@ -170,7 +184,7 @@ class TestViewArguments {
 
   final List<int> range;
 
-  final _i11.Key? key;
+  final _i12.Key? key;
 
   final int? testId;
 
@@ -199,7 +213,7 @@ class ResultDetailsViewArguments {
 
   final int id;
 
-  final _i11.Key? key;
+  final _i12.Key? key;
 
   @override
   String toString() {
@@ -226,7 +240,7 @@ class ActivityDetailsViewArguments {
 
   final int id;
 
-  final _i11.Key? key;
+  final _i12.Key? key;
 
   @override
   String toString() {
@@ -245,7 +259,7 @@ class ActivityDetailsViewArguments {
   }
 }
 
-extension NavigatorStateExtension on _i12.NavigationService {
+extension NavigatorStateExtension on _i13.NavigationService {
   Future<dynamic> navigateToHomeView([
     int? routerId,
     bool preventDuplicates = true,
@@ -276,7 +290,7 @@ extension NavigatorStateExtension on _i12.NavigationService {
 
   Future<dynamic> navigateToTestView({
     required List<int> range,
-    _i11.Key? key,
+    _i12.Key? key,
     int? testId,
     int? routerId,
     bool preventDuplicates = true,
@@ -336,7 +350,7 @@ extension NavigatorStateExtension on _i12.NavigationService {
 
   Future<dynamic> navigateToResultDetailsView({
     required int id,
-    _i11.Key? key,
+    _i12.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -353,7 +367,7 @@ extension NavigatorStateExtension on _i12.NavigationService {
 
   Future<dynamic> navigateToActivityDetailsView({
     required int id,
-    _i11.Key? key,
+    _i12.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -376,6 +390,20 @@ extension NavigatorStateExtension on _i12.NavigationService {
         transition,
   ]) async {
     return navigateTo<dynamic>(Routes.moreView,
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
+  }
+
+  Future<dynamic> navigateToOnboardingView([
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  ]) async {
+    return navigateTo<dynamic>(Routes.onboardingView,
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,
@@ -412,7 +440,7 @@ extension NavigatorStateExtension on _i12.NavigationService {
 
   Future<dynamic> replaceWithTestView({
     required List<int> range,
-    _i11.Key? key,
+    _i12.Key? key,
     int? testId,
     int? routerId,
     bool preventDuplicates = true,
@@ -472,7 +500,7 @@ extension NavigatorStateExtension on _i12.NavigationService {
 
   Future<dynamic> replaceWithResultDetailsView({
     required int id,
-    _i11.Key? key,
+    _i12.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -489,7 +517,7 @@ extension NavigatorStateExtension on _i12.NavigationService {
 
   Future<dynamic> replaceWithActivityDetailsView({
     required int id,
-    _i11.Key? key,
+    _i12.Key? key,
     int? routerId,
     bool preventDuplicates = true,
     Map<String, String>? parameters,
@@ -512,6 +540,20 @@ extension NavigatorStateExtension on _i12.NavigationService {
         transition,
   ]) async {
     return replaceWith<dynamic>(Routes.moreView,
+        id: routerId,
+        preventDuplicates: preventDuplicates,
+        parameters: parameters,
+        transition: transition);
+  }
+
+  Future<dynamic> replaceWithOnboardingView([
+    int? routerId,
+    bool preventDuplicates = true,
+    Map<String, String>? parameters,
+    Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)?
+        transition,
+  ]) async {
+    return replaceWith<dynamic>(Routes.onboardingView,
         id: routerId,
         preventDuplicates: preventDuplicates,
         parameters: parameters,

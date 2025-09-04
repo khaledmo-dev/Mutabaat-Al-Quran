@@ -87,5 +87,7 @@
     "export_success": "Data exported successfully.",
     "export_failed": "Failed to export data. Please try again.",
     "success": "Done successfully.",
-    "error": "Something went wrong."
-    }
+    "error": "Something went wrong.",
+    "choose_lang": "Choose Language",
+    "dark_theme": "Dark Theme"
+}

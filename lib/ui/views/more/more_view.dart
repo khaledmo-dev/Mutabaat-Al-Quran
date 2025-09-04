@@ -70,9 +70,9 @@ class MoreView extends StackedView<MoreViewModel> {
                           ),
                         ),
                         horizontalSpaceSmall,
-                        const Text(
-                          "الثيم الليلي",
-                          style: TextStyle(fontSize: 16),
+                        Text(
+                          "dark_theme".translate(),
+                          style: const TextStyle(fontSize: 16),
                         ),
                       ],
                     ),
