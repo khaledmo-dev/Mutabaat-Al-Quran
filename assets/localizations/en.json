@@ -81,5 +81,11 @@
     "rate_now": "Rate Now !",
     "later": "Later",
     "share_app": "Share the app",
-    "share_message": "I’m using this amazing app to track my Qur’an progress. It helps me stay consistent and motivated. You should try it too, in shaa Allah!"
-}
+    "share_message": "I’m using this amazing app to track my Qur’an progress. It helps me stay consistent and motivated. You should try it too, in shaa Allah!",
+    "import_success": "Data imported successfully.",
+    "import_failed": "Failed to import data. Please try again.",
+    "export_success": "Data exported successfully.",
+    "export_failed": "Failed to export data. Please try again.",
+    "success": "Done successfully.",
+    "error": "Something went wrong."
+    }

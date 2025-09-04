@@ -12,6 +12,7 @@ import 'package:stacked_services/src/navigation/navigation_service.dart';
 import 'package:stacked_shared/stacked_shared.dart';
 
 import '../services/activity_service.dart';
+import '../services/flash_message_service.dart';
 import '../services/local_storage_service.dart';
 import '../services/localization_service.dart';
 import '../services/result_service.dart';
@@ -45,4 +46,6 @@ Future<void> setupLocator({
   final localizationService = LocalizationService();
   await localizationService.init();
   locator.registerSingleton(localizationService);
+
+  locator.registerLazySingleton(() => FlashMessageService());
 }

@@ -5,6 +5,7 @@ import 'package:heroicons/heroicons.dart';
 import 'package:quran_test/app/app.locator.dart';
 import 'package:quran_test/data/database.dart';
 import 'package:quran_test/main.dart';
+import 'package:quran_test/services/flash_message_service.dart';
 import 'package:quran_test/services/local_storage_service.dart';
 import 'package:quran_test/services/localization_service.dart';
 import 'package:quran_test/ui/common/app_bar.dart';
@@ -252,6 +253,7 @@ class BackupSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final flashMessageService = locator<FlashMessageService>();
     final databaseService = locator<Database>();
     final dialogService = locator<DialogService>();
     return Padding(
@@ -270,8 +272,24 @@ class BackupSheet extends StatelessWidget {
                 style: HeroIconStyle.solid,
                 color: kcPrimaryColor,
               ),
-              onTap: () {
-                databaseService.exportData();
+              onTap: () async {
+                if (context.mounted) {
+                  Navigator.pop(context);
+                }
+                var value = await databaseService.exportData();
+
+                if (value) {
+                  flashMessageService.showMessage(
+                    title: "success".translate(),
+                    message: 'export_success'.translate(),
+                  );
+                } else {
+                  flashMessageService.showMessage(
+                    title: "error".translate(),
+                    message: "export_failed".translate(),
+                    type: FlashMessageType.danger,
+                  );
+                }
               },
             ),
             verticalSpaceSmall,
@@ -293,7 +311,21 @@ class BackupSheet extends StatelessWidget {
                   Navigator.pop(context);
                 }
                 if (result != null) {
-                  databaseService.importData(keepOld: result.confirmed);
+                  var value = await databaseService.importData(
+                      keepOld: result.confirmed);
+
+                  if (value) {
+                    flashMessageService.showMessage(
+                      title: "success".translate(),
+                      message: 'import_success'.translate(),
+                    );
+                  } else {
+                    flashMessageService.showMessage(
+                      title: "error".translate(),
+                      message: "import_failed".translate(),
+                      type: FlashMessageType.danger,
+                    );
+                  }
                 }
               },
             ),

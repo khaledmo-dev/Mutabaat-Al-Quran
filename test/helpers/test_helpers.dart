@@ -9,6 +9,7 @@ import 'package:quran_test/services/result_service.dart';
 import 'package:quran_test/services/template_service.dart';
 import 'package:quran_test/services/localization_service.dart';
 import 'package:quran_test/services/local_storage_service.dart';
+import 'package:quran_test/services/flash_message_service.dart';
 // @stacked-import
 
 import 'test_helpers.mocks.dart';
@@ -24,6 +25,7 @@ import 'test_helpers.mocks.dart';
   MockSpec<TemplateService>(onMissingStub: OnMissingStub.returnDefault),
   MockSpec<LocalizationService>(onMissingStub: OnMissingStub.returnDefault),
   MockSpec<LocalStorageService>(onMissingStub: OnMissingStub.returnDefault),
+  MockSpec<FlashMessageService>(onMissingStub: OnMissingStub.returnDefault),
 // @stacked-mock-spec
 ])
 void registerServices() {
@@ -37,6 +39,7 @@ void registerServices() {
   getAndRegisterTemplateService();
   getAndRegisterLocalizationService();
   getAndRegisterLocalStorageService();
+  getAndRegisterFlashMessageService();
 // @stacked-mock-register
 }
 
@@ -136,6 +139,13 @@ MockLocalStorageService getAndRegisterLocalStorageService() {
   _removeRegistrationIfExists<LocalStorageService>();
   final service = MockLocalStorageService();
   locator.registerSingleton<LocalStorageService>(service);
+  return service;
+}
+
+MockFlashMessageService getAndRegisterFlashMessageService() {
+  _removeRegistrationIfExists<FlashMessageService>();
+  final service = MockFlashMessageService();
+  locator.registerSingleton<FlashMessageService>(service);
   return service;
 }
 // @stacked-mock-create

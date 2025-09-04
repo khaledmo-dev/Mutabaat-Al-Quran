@@ -12,6 +12,7 @@ import 'package:mockito/src/dummies.dart' as _i5;
 import 'package:quran_test/data/database.dart' as _i2;
 import 'package:quran_test/data/models/models.dart' as _i10;
 import 'package:quran_test/services/activity_service.dart' as _i12;
+import 'package:quran_test/services/flash_message_service.dart' as _i17;
 import 'package:quran_test/services/local_storage_service.dart' as _i16;
 import 'package:quran_test/services/localization_service.dart' as _i15;
 import 'package:quran_test/services/result_service.dart' as _i13;
@@ -1315,3 +1316,9 @@ class MockLocalStorageService extends _i1.Mock
         returnValueForMissingStub: null,
       );
 }
+
+/// A class which mocks [FlashMessageService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockFlashMessageService extends _i1.Mock
+    implements _i17.FlashMessageService {}

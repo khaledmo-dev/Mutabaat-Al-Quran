@@ -18,6 +18,7 @@ import 'package:quran_test/services/template_service.dart';
 import 'package:quran_test/services/localization_service.dart';
 import 'package:quran_test/services/local_storage_service.dart';
 import 'package:quran_test/ui/views/more/more_view.dart';
+import 'package:quran_test/services/flash_message_service.dart';
 // @stacked-import
 
 @StackedApp(
@@ -44,6 +45,7 @@ import 'package:quran_test/ui/views/more/more_view.dart';
     LazySingleton(classType: TemplateService),
     InitializableSingleton(classType: LocalStorageService),
     InitializableSingleton(classType: LocalizationService),
+    LazySingleton(classType: FlashMessageService),
 // @stacked-service
   ],
   // bottomsheets: [

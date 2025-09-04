@@ -81,5 +81,11 @@
   "rate_now": "Beri Nilai Sekarang",
   "later": "Nanti",
   "share_app": "Bagikan aplikasi",
-  "share_message": "Saya menggunakan aplikasi ini untuk melacak progres tilawah dan hafalan Al-Qur’an saya. Sangat membantu agar tetap konsisten dan termotivasi. Coba juga, insyaaAllah!"
+  "share_message": "Saya menggunakan aplikasi ini untuk melacak progres tilawah dan hafalan Al-Qur’an saya. Sangat membantu agar tetap konsisten dan termotivasi. Coba juga, insyaaAllah!",
+  "import_success": "Data berhasil diimpor.",
+  "import_failed": "Gagal mengimpor data. Silakan coba lagi.",
+  "export_success": "Data berhasil diekspor.",
+  "export_failed": "Gagal mengekspor data. Silakan coba lagi.",
+  "success": "Berhasil.",
+  "error": "Terjadi kesalahan."
 }

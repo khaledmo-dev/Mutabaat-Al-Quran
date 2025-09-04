@@ -79,7 +79,7 @@ class Database extends _$Database {
         },
       );
 
-  importData({bool keepOld = true}) async {
+  Future<bool> importData({bool keepOld = true}) async {
     final result = await FilePicker.platform
         .pickFiles(allowedExtensions: ['xlsx', 'xls'], type: FileType.custom);
 
@@ -89,146 +89,154 @@ class Database extends _$Database {
 
       // Decode Excel
       final excel = Excel.decodeBytes(bytes);
+      try {
+        await transaction(
+          () async {
+            if (!keepOld) {
+              await Future.forEach(allTables, (table) async {
+                await delete(table).go();
+              });
+            }
 
-      await transaction(
-        () async {
-          if (!keepOld) {
-            await Future.forEach(allTables, (table) async {
-              await delete(table).go();
+            var activitiesSheet = excel[activities.actualTableName];
+            var templatesSheet = excel[templates.actualTableName];
+            var resultsSheet = excel[results.actualTableName];
+
+            final Map<int, int> activitiesIdMapping = {};
+
+            final Map<int, int> templatesIdMapping = {};
+
+            final Map<int, int> resultsIdMapping = {};
+
+            await Future.forEach(activitiesSheet.rows, (row) async {
+              var value = await into(activities).insertReturning(
+                ActivitiesCompanion.insert(
+                  // id:
+                  name: row[1]!.value.toString().replaceAll('"', ""),
+                  order: int.parse(row[2]!.value.toString()),
+                ),
+              );
+
+              activitiesIdMapping[(int.parse(row[0]!.value.toString()))] =
+                  value.id;
             });
-          }
 
-          var activitiesSheet = excel[activities.actualTableName];
-          var templatesSheet = excel[templates.actualTableName];
-          var resultsSheet = excel[results.actualTableName];
+            await Future.forEach(templatesSheet.rows, (row) async {
+              var value = await into(templates).insertReturning(
+                TemplatesCompanion.insert(
+                  name: row[1]!.value.toString().replaceAll('"', ""),
+                ),
+              );
 
-          final Map<int, int> activitiesIdMapping = {};
+              templatesIdMapping[(int.parse(row[0]!.value.toString()))] =
+                  value.id;
+            });
 
-          final Map<int, int> templatesIdMapping = {};
+            await Future.forEach(resultsSheet.rows, (row) async {
+              var value = await into(results)
+                  .insertReturning(ResultsCompanion.insert());
 
-          final Map<int, int> resultsIdMapping = {};
+              resultsIdMapping[(int.parse(row[0]!.value.toString()))] =
+                  value.id;
+            });
 
-          await Future.forEach(activitiesSheet.rows, (row) async {
-            var value = await into(activities).insertReturning(
-              ActivitiesCompanion.insert(
-                // id:
-                name: row[1]!.value.toString().replaceAll('"', ""),
-                order: int.parse(row[2]!.value.toString()),
-              ),
+            var schedulesSheet = excel[activitySchedules.actualTableName];
+
+            var entriesSheet = excel[entries.actualTableName];
+
+            var templatesSegmentsSheet =
+                excel[templateSegments.actualTableName];
+
+            var answersSheet = excel[answers.actualTableName];
+
+            await batch(
+              (batch) async {
+                batch.insertAllOnConflictUpdate(
+                  activitySchedules,
+                  schedulesSheet.rows.map(
+                    (row) {
+                      return ActivitySchedulesCompanion.insert(
+                        scheduledDays:
+                            (jsonDecode(row[2]!.value.toString()) as List)
+                                .map((item) => int.parse(item.toString()))
+                                .toList(),
+                        activityId: activitiesIdMapping[
+                            int.parse(row[1]!.value.toString())]!,
+                        startDate: Value(DateTime.fromMillisecondsSinceEpoch(
+                            int.parse(row[3]!.value.toString()),
+                            isUtc: true)),
+                        endDate: row[4]!.value.toString() == "null"
+                            ? const Value.absent()
+                            : Value(
+                                DateTime.fromMillisecondsSinceEpoch(
+                                    int.parse(row[4]!.value.toString()),
+                                    isUtc: true),
+                              ),
+                      );
+                    },
+                  ),
+                );
+
+                batch.insertAll(
+                  entries,
+                  entriesSheet.rows.map(
+                    (row) {
+                      return EntriesCompanion.insert(
+                        body: "",
+                        date: (DateTime.fromMillisecondsSinceEpoch(
+                            int.parse(row[2]!.value.toString()),
+                            isUtc: true)),
+                        fromAyah: int.parse(row[3]!.value.toString()),
+                        toAyah: int.parse(row[4]!.value.toString()),
+                        activityId: activitiesIdMapping[
+                            int.parse(row[5]!.value.toString())]!,
+                      );
+                    },
+                  ),
+                );
+
+                batch.insertAll(
+                  templateSegments,
+                  templatesSegmentsSheet.rows.map(
+                    (row) {
+                      return TemplateSegmentsCompanion.insert(
+                        fromAyah: int.parse(row[1]!.value.toString()),
+                        toAyah: int.parse(row[2]!.value.toString()),
+                        templateId: templatesIdMapping[
+                            int.parse(row[3]!.value.toString())]!,
+                      );
+                    },
+                  ),
+                );
+
+                batch.insertAll(
+                  answers,
+                  answersSheet.rows.map(
+                    (row) {
+                      return AnswersCompanion.insert(
+                        isCorrect: json.decode(row[1]!.value.toString()),
+                        fromAyah: json.decode(row[2]!.value.toString()),
+                        toAyah: json.decode(row[3]!.value.toString()),
+                        resultId: resultsIdMapping[
+                            int.parse(row[4]!.value.toString())]!,
+                      );
+                    },
+                  ),
+                );
+              },
             );
-
-            activitiesIdMapping[(int.parse(row[0]!.value.toString()))] =
-                value.id;
-          });
-
-          await Future.forEach(templatesSheet.rows, (row) async {
-            var value = await into(templates).insertReturning(
-              TemplatesCompanion.insert(
-                name: row[1]!.value.toString().replaceAll('"', ""),
-              ),
-            );
-
-            templatesIdMapping[(int.parse(row[0]!.value.toString()))] =
-                value.id;
-          });
-
-          await Future.forEach(resultsSheet.rows, (row) async {
-            var value =
-                await into(results).insertReturning(ResultsCompanion.insert());
-
-            resultsIdMapping[(int.parse(row[0]!.value.toString()))] = value.id;
-          });
-
-          var schedulesSheet = excel[activitySchedules.actualTableName];
-
-          var entriesSheet = excel[entries.actualTableName];
-
-          var templatesSegmentsSheet = excel[templateSegments.actualTableName];
-
-          var answersSheet = excel[answers.actualTableName];
-
-          await batch(
-            (batch) async {
-              batch.insertAllOnConflictUpdate(
-                activitySchedules,
-                schedulesSheet.rows.map(
-                  (row) {
-                    return ActivitySchedulesCompanion.insert(
-                      scheduledDays:
-                          (jsonDecode(row[2]!.value.toString()) as List)
-                              .map((item) => int.parse(item.toString()))
-                              .toList(),
-                      activityId: activitiesIdMapping[
-                          int.parse(row[1]!.value.toString())]!,
-                      startDate: Value(DateTime.fromMillisecondsSinceEpoch(
-                          int.parse(row[3]!.value.toString()),
-                          isUtc: true)),
-                      endDate: row[4]!.value.toString() == "null"
-                          ? const Value.absent()
-                          : Value(
-                              DateTime.fromMillisecondsSinceEpoch(
-                                  int.parse(row[4]!.value.toString()),
-                                  isUtc: true),
-                            ),
-                    );
-                  },
-                ),
-              );
-
-              batch.insertAll(
-                entries,
-                entriesSheet.rows.map(
-                  (row) {
-                    return EntriesCompanion.insert(
-                      body: "",
-                      date: (DateTime.fromMillisecondsSinceEpoch(
-                          int.parse(row[2]!.value.toString()),
-                          isUtc: true)),
-                      fromAyah: int.parse(row[3]!.value.toString()),
-                      toAyah: int.parse(row[4]!.value.toString()),
-                      activityId: activitiesIdMapping[
-                          int.parse(row[5]!.value.toString())]!,
-                    );
-                  },
-                ),
-              );
-
-              batch.insertAll(
-                templateSegments,
-                templatesSegmentsSheet.rows.map(
-                  (row) {
-                    return TemplateSegmentsCompanion.insert(
-                      fromAyah: int.parse(row[1]!.value.toString()),
-                      toAyah: int.parse(row[2]!.value.toString()),
-                      templateId: templatesIdMapping[
-                          int.parse(row[3]!.value.toString())]!,
-                    );
-                  },
-                ),
-              );
-
-              batch.insertAll(
-                answers,
-                answersSheet.rows.map(
-                  (row) {
-                    return AnswersCompanion.insert(
-                      isCorrect: json.decode(row[1]!.value.toString()),
-                      fromAyah: json.decode(row[2]!.value.toString()),
-                      toAyah: json.decode(row[3]!.value.toString()),
-                      resultId: resultsIdMapping[
-                          int.parse(row[4]!.value.toString())]!,
-                    );
-                  },
-                ),
-              );
-            },
-          );
-        },
-      );
+          },
+        );
+        return true;
+      } catch (e) {
+        return false;
+      }
     }
+
+    return false;
   }
 
-  exportData() async {
+  Future<bool> exportData() async {
     var excel = Excel.createExcel();
 
     // ignore: avoid_function_literals_in_foreach_calls
@@ -263,11 +271,13 @@ class Database extends _$Database {
       ..createSync(recursive: true)
       ..writeAsBytesSync(bytes, flush: true);
 
-    await FilePicker.platform.saveFile(
+    var result = await FilePicker.platform.saveFile(
       dialogTitle: 'Save your backup',
       fileName: 'backup_${DateTime.now().formatDate}.xlsx',
       bytes: await file.readAsBytes(),
     );
+
+    return result != null;
   }
 }
 
