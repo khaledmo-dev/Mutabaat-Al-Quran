@@ -83,4 +83,12 @@ extension DateTimeExtension on DateTime {
   }
 
   DateTime get dateOnly => DateTime(year, month, day);
+
+  String formatDate() {
+    final yy = year % 100; // last two digits of the year
+    final mm = month.toString().padLeft(2, '0');
+    final dd = day.toString().padLeft(2, '0');
+
+    return '$yy-$mm-$dd';
+  }
 }

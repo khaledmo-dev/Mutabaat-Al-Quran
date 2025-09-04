@@ -6,6 +6,7 @@ import 'package:drift/native.dart';
 import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:quran_test/data/tables/entries.dart';
+import 'package:quran_test/ui/common/date_utils.dart';
 import 'package:sqlite3_flutter_libs/sqlite3_flutter_libs.dart';
 import 'package:path/path.dart' as p;
 import 'package:excel/excel.dart';
@@ -264,7 +265,7 @@ class Database extends _$Database {
 
     await FilePicker.platform.saveFile(
       dialogTitle: 'Save your backup',
-      fileName: 'backup.xlsx',
+      fileName: 'backup_${DateTime.now().formatDate}.xlsx',
       bytes: await file.readAsBytes(),
     );
   }
