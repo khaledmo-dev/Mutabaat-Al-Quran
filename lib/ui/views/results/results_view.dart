@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:iconly/iconly.dart';
+import 'package:heroicons/heroicons.dart';
 import 'package:quran_test/services/localization_service.dart';
 import 'package:quran_test/ui/common/app_bar.dart';
+import 'package:quran_test/ui/common/app_colors.dart';
 import 'package:quran_test/ui/common/ui_helpers.dart';
 import 'package:stacked/stacked.dart';
 
@@ -18,7 +19,6 @@ class ResultsView extends StackedView<ResultsViewModel> {
   ) {
     return Scaffold(
       appBar: BaseAppBar(title: Text('results'.translate())),
-      backgroundColor: Colors.white,
       body: ListView.builder(
         padding: const EdgeInsets.all(20.0),
         itemCount: viewModel.results.length,
@@ -36,7 +36,7 @@ class ResultsView extends StackedView<ResultsViewModel> {
                 vertical: 12.0,
               ),
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12.0),
+                borderRadius: BorderRadius.circular(4.0),
                 border: Border.all(
                   color: Colors.blueGrey.withValues(alpha: .2),
                 ),
@@ -55,7 +55,11 @@ class ResultsView extends StackedView<ResultsViewModel> {
                         onPressed: () {
                           viewModel.deleteRecord(result.id);
                         },
-                        icon: const Icon(IconlyBold.delete),
+                        icon: const HeroIcon(
+                          HeroIcons.trash,
+                          style: HeroIconStyle.solid,
+                          color: kcErrorColor,
+                        ),
                         color: Colors.red,
                         visualDensity: VisualDensity.compact,
                       )

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:iconly/iconly.dart';
+import 'package:heroicons/heroicons.dart';
 import 'package:quran_test/data/models/answer.dart';
 import 'package:quran_test/services/localization_service.dart';
 import 'package:quran_test/ui/common/app_bar.dart';
+import 'package:quran_test/ui/common/app_colors.dart';
 import 'package:quran_test/ui/common/ui_helpers.dart';
 import 'package:quran_test/ui/views/test/test_view.dart';
 import 'package:stacked/stacked.dart';
@@ -20,7 +21,6 @@ class ResultDetailsView extends StackedView<ResultDetailsViewModel> {
   ) {
     return Scaffold(
       appBar: const BaseAppBar(),
-      backgroundColor: Colors.white,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -85,7 +85,7 @@ class _AnswerTileState extends State<AnswerTile>
   @override
   Widget build(BuildContext context) {
     var answer = widget.answer;
-    Color color = widget.answer.isCorrect ? Colors.green : Colors.red;
+    Color color = widget.answer.isCorrect ? kcSuccessColor : kcErrorColor;
     return Padding(
       padding: const EdgeInsets.only(bottom: 12.0),
       child: Expansible(
@@ -106,7 +106,7 @@ class _AnswerTileState extends State<AnswerTile>
               decoration: BoxDecoration(
                 color:
                     controller.isExpanded ? color : color.withValues(alpha: .1),
-                borderRadius: BorderRadius.circular(12.0),
+                borderRadius: BorderRadius.circular(4.0),
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -121,8 +121,8 @@ class _AnswerTileState extends State<AnswerTile>
                   RotationTransition(
                       turns: Tween<double>(begin: 0.0, end: 1.0)
                           .animate(_animationController),
-                      child: Icon(
-                        IconlyBold.arrow_down_2,
+                      child: HeroIcon(
+                        HeroIcons.chevronDoubleDown,
                         color: controller.isExpanded ? Colors.white : color,
                       )),
                 ],
@@ -136,8 +136,8 @@ class _AnswerTileState extends State<AnswerTile>
             padding: const EdgeInsets.all(12.0),
             margin: const EdgeInsets.only(top: 12.0),
             decoration: BoxDecoration(
-              border: Border.all(color: Colors.blueGrey.withValues(alpha: .1)),
-              borderRadius: BorderRadius.circular(8.0),
+              border: Border.all(color: Theme.of(context).colorScheme.outline),
+              borderRadius: BorderRadius.circular(4.0),
             ),
             child: Column(
               children: [

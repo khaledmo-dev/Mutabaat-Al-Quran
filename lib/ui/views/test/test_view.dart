@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:iconly/iconly.dart';
+import 'package:heroicons/heroicons.dart';
 import 'package:quran_test/data/database.dart';
 import 'package:quran_test/services/localization_service.dart';
 import 'package:quran_test/ui/common/app_bar.dart';
@@ -22,7 +22,7 @@ class TestView extends StackedView<TestViewModel> {
     Widget? child,
   ) {
     var ayat = viewModel.ayat;
-    bool isEnglish = Localizations.localeOf(context).languageCode == 'en';
+    bool isRTL = Directionality.of(context) == TextDirection.rtl;
 
     return PopScope(
       canPop: false,
@@ -38,14 +38,12 @@ class TestView extends StackedView<TestViewModel> {
             onPressed: () {
               viewModel.confirmLeave();
             },
-            icon: Icon(
-              isEnglish
-                  ? IconlyBold.arrow_left_square
-                  : IconlyBold.arrow_right_square,
+            icon: HeroIcon(
+              !isRTL ? HeroIcons.arrowLeftCircle : HeroIcons.arrowRightCircle,
+              style: HeroIconStyle.solid,
             ),
           ),
         ),
-        backgroundColor: Colors.white,
         body: Builder(
           builder: (context) {
             if (viewModel.ayat.isEmpty) {
@@ -67,11 +65,9 @@ class TestView extends StackedView<TestViewModel> {
                             alignment: Alignment.center,
                             children: [
                               SvgPicture.asset(
-                                "assets/banner.svg",
-                                colorFilter: const ColorFilter.mode(
-                                  kcPrimaryColor,
-                                  BlendMode.color,
-                                ),
+                                Theme.of(context).brightness == Brightness.dark
+                                    ? "assets/banner-dark.svg"
+                                    : "assets/banner-light.svg",
                                 width: double.infinity,
                                 height: (screenWidth(context) - 40) * .11,
                               ),
@@ -81,7 +77,7 @@ class TestView extends StackedView<TestViewModel> {
                                     : ".......",
                                 style: const TextStyle(
                                   fontFamily: "hafs",
-                                  fontSize: 20,
+                                  fontSize: 24,
                                 ),
                               ),
                             ],
@@ -123,14 +119,8 @@ class TestView extends StackedView<TestViewModel> {
                               title: "show_ayat".translate(),
                               callback: () {
                                 showModalBottomSheet(
-                                  backgroundColor: Colors.white,
                                   isScrollControlled: true,
-                                  shape: const RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(20),
-                                      topRight: Radius.circular(20),
-                                    ),
-                                  ),
+                                  shape: const RoundedRectangleBorder(),
                                   context: context,
                                   builder: (context) {
                                     return AyatSheet(ayat);
@@ -206,8 +196,9 @@ class _MoreTextState extends State<MoreText> {
           width: double.infinity,
           padding: EdgeInsets.all(widget.padding),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8.0),
-            color: kcPrimaryColor.withValues(alpha: .1),
+            borderRadius: BorderRadius.circular(4.0),
+            border: Border.all(color: Theme.of(context).colorScheme.outline),
+            color: kcPrimaryColor.withValues(alpha: .05),
           ),
           child: Text(
             widget.text,
@@ -269,8 +260,11 @@ class _AyatSheetState extends State<AyatSheet> {
                     onPressed: () {
                       Navigator.of(context).pop();
                     },
-                    icon:
-                        const Icon(IconlyBold.close_square, color: Colors.red),
+                    icon: const HeroIcon(
+                      HeroIcons.xCircle,
+                      style: HeroIconStyle.solid,
+                      color: kcErrorColor,
+                    ),
                   ),
                 ),
               ],
@@ -293,13 +287,14 @@ class _AyatSheetState extends State<AyatSheet> {
                       });
                     }
                   },
-                  icon: Icon(
+                  icon: HeroIcon(
                     isRTL
-                        ? IconlyBold.arrow_right_circle
-                        : IconlyBold.arrow_left_circle,
+                        ? HeroIcons.arrowRightCircle
+                        : HeroIcons.arrowLeftCircle,
                     color: widget.ayat.indexOf(ayah) == widget.ayat.length - 1
-                        ? null
+                        ? Colors.grey.withValues(alpha: .1)
                         : kcPrimaryColor,
+                    style: HeroIconStyle.solid,
                   ),
                 ),
                 horizontalSpaceMedium,
@@ -313,12 +308,14 @@ class _AyatSheetState extends State<AyatSheet> {
                       });
                     }
                   },
-                  icon: Icon(
+                  icon: HeroIcon(
                     isRTL
-                        ? IconlyBold.arrow_left_circle
-                        : IconlyBold.arrow_right_circle,
-                    color:
-                        widget.ayat.indexOf(ayah) == 0 ? null : kcPrimaryColor,
+                        ? HeroIcons.arrowLeftCircle
+                        : HeroIcons.arrowRightCircle,
+                    color: widget.ayat.indexOf(ayah) == 0
+                        ? Colors.grey.withValues(alpha: .1)
+                        : kcPrimaryColor,
+                    style: HeroIconStyle.solid,
                   ),
                 )
               ],

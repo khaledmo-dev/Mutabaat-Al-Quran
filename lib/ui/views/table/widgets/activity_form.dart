@@ -9,7 +9,7 @@ import 'package:quran_test/ui/common/app_colors.dart';
 import 'package:quran_test/ui/common/base_button.dart';
 import 'package:quran_test/ui/common/base_text_field.dart';
 import 'package:quran_test/ui/common/ui_helpers.dart';
-import 'package:quran_test/date_utils.dart';
+import 'package:quran_test/ui/common/date_utils.dart';
 
 class ActivityForm extends StatefulWidget {
   const ActivityForm({super.key, this.activity});
@@ -72,7 +72,7 @@ class _ActivityFormState extends State<ActivityForm> {
                     },
                     child: Container(
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8),
+                        borderRadius: BorderRadius.circular(4),
                         border: const Border(
                           top: BorderSide(width: 1, color: kcPrimaryColor),
                           right: BorderSide(width: 1, color: kcPrimaryColor),

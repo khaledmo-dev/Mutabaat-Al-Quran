@@ -167,7 +167,7 @@ class _SearchSelectState<T> extends State<SearchSelect<T>> {
                       },
                       icon: Icon(
                         !isOpen ? Icons.arrow_drop_down : Icons.arrow_drop_up,
-                        color: isOpen ? kcPrimaryColor : Colors.black,
+                        color: isOpen ? kcPrimaryColor : null,
                       ),
                     ),
                   ),
@@ -183,8 +183,11 @@ class _SearchSelectState<T> extends State<SearchSelect<T>> {
                 width: double.infinity,
                 height: 200,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  color: kcVeryLightGrey,
+                  borderRadius: BorderRadius.circular(4.0),
+                  color: null,
+                  border: Border.all(
+                    color: Theme.of(context).colorScheme.outline,
+                  ),
                 ),
                 child: items.isEmpty
                     ? const Center(child: Text('No Items Available'))
@@ -212,8 +215,10 @@ class _SearchSelectState<T> extends State<SearchSelect<T>> {
                                       color:
                                           selectedItems.elementAtOrNull(0) == e
                                               ? kcPrimaryColor
-                                              : Colors.white,
-                                      borderRadius: BorderRadius.circular(8),
+                                              : Theme.of(context)
+                                                  .inputDecorationTheme
+                                                  .fillColor,
+                                      borderRadius: BorderRadius.circular(4.0),
                                     ),
                                     width: double.infinity,
                                     child: Padding(
@@ -283,7 +288,7 @@ class _SearchSelectState<T> extends State<SearchSelect<T>> {
                       },
                       icon: Icon(
                         !isOpen ? Icons.arrow_drop_down : Icons.arrow_drop_up,
-                        color: isOpen ? kcPrimaryColor : Colors.black,
+                        color: isOpen ? kcPrimaryColor : null,
                       ),
                     ),
                   ),
@@ -411,7 +416,6 @@ class _SearchSelectState<T> extends State<SearchSelect<T>> {
   @override
   void dispose() {
     _controller.dispose();
-    _focusNode.dispose();
     if (widget.controller != null) {
       widget.controller!.setGetPickedItemsCallback(null);
     }

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:iconly/iconly.dart';
+import 'package:heroicons/heroicons.dart';
 import 'package:quran_test/main.dart';
 import 'package:quran_test/services/localization_service.dart';
 import 'package:quran_test/ui/common/app_bar.dart';
+import 'package:quran_test/ui/common/app_colors.dart';
 import 'package:quran_test/ui/common/ui_helpers.dart';
 import 'package:quran_test/ui/views/table/widgets/activity_form.dart';
 import 'package:quran_test/ui/views/table/widgets/activity_column.dart';
@@ -25,7 +26,6 @@ class TableView extends StackedView<TableViewModel> {
         builder: (context, value, child) {
           return Scaffold(
             resizeToAvoidBottomInset: false,
-            backgroundColor: Colors.white,
             appBar: BaseAppBar(
               title: Row(
                 mainAxisSize: MainAxisSize.min,
@@ -54,8 +54,8 @@ class TableView extends StackedView<TableViewModel> {
                   icon: ShaderMask(
                     shaderCallback: (bounds) => LinearGradient(
                       colors: [
-                        viewModel.isHijri ? Colors.green : Colors.red,
-                        viewModel.isHijri ? Colors.green : Colors.red,
+                        viewModel.isHijri ? kcSuccessColor : kcErrorColor,
+                        viewModel.isHijri ? kcSuccessColor : kcErrorColor,
                       ],
                     ).createShader(bounds),
                     blendMode: BlendMode.srcIn,
@@ -67,7 +67,10 @@ class TableView extends StackedView<TableViewModel> {
                 onPressed: () {
                   viewModel.pickDate(context);
                 },
-                icon: const Icon(IconlyBold.calendar),
+                icon: const HeroIcon(
+                  HeroIcons.calendarDays,
+                  style: HeroIconStyle.solid,
+                ),
               ),
             ),
             body: SizedBox(
@@ -79,43 +82,43 @@ class TableView extends StackedView<TableViewModel> {
                       scrollDirection: Axis.horizontal,
                       slivers: [
                         SliverToBoxAdapter(
-                            child: Stack(
-                          children: [
-                            const DatesColumn(),
-                            Container(
-                              width: screenWidth(context) * .3,
-                              height: constraints.maxHeight / 8,
-                              decoration: const BoxDecoration(
-                                border: BorderDirectional(
-                                  end: BorderSide(
-                                    color: Color(0xffE3E3E3),
+                          child: Stack(
+                            children: [
+                              const DatesColumn(),
+                              InkWell(
+                                onTap: () {
+                                  showModalBottomSheet(
+                                    isScrollControlled: true,
+                                    shape: const RoundedRectangleBorder(),
+                                    context: context,
+                                    builder: (context) {
+                                      return const ActivityForm();
+                                    },
+                                  );
+                                },
+                                child: Ink(
+                                  width: screenWidth(context) * .3,
+                                  height: constraints.maxHeight / 8,
+                                  decoration: BoxDecoration(
+                                    border: BorderDirectional(
+                                      end: BorderSide(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .outline,
+                                      ),
+                                    ),
+                                  ),
+                                  child: const Center(
+                                    child: HeroIcon(
+                                      HeroIcons.squaresPlus,
+                                      style: HeroIconStyle.solid,
+                                    ),
                                   ),
                                 ),
                               ),
-                              child: Center(
-                                child: IconButton(
-                                  onPressed: () {
-                                    showModalBottomSheet(
-                                      backgroundColor: Colors.white,
-                                      isScrollControlled: true,
-                                      shape: const RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.only(
-                                          topLeft: Radius.circular(20),
-                                          topRight: Radius.circular(20),
-                                        ),
-                                      ),
-                                      context: context,
-                                      builder: (context) {
-                                        return const ActivityForm();
-                                      },
-                                    );
-                                  },
-                                  icon: const Icon(IconlyBold.plus),
-                                ),
-                              ),
-                            ),
-                          ],
-                        )),
+                            ],
+                          ),
+                        ),
                         if (!viewModel.dataReady)
                           SliverToBoxAdapter(
                             child: Shimmer(

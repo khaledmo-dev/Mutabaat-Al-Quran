@@ -4,6 +4,7 @@ import 'package:quran_test/services/localization_service.dart';
 import 'package:quran_test/services/table_service.dart';
 import 'package:quran_test/surahs.dart';
 import 'package:quran_test/ui/common/base_button.dart';
+import 'package:quran_test/ui/common/rating_sheet.dart';
 import 'package:quran_test/ui/common/ui_helpers.dart';
 import 'package:quran_test/ui/views/home/widgets/template_form.dart';
 import 'package:quran_test/ui/widgets/common/segments_selector/segments_selector.dart';
@@ -97,6 +98,7 @@ class _EntryFormState extends State<EntryForm> {
                   activityId: widget.activityId,
                 );
                 Navigator.pop(context);
+                showRateSheet();
               },
             )
           ],

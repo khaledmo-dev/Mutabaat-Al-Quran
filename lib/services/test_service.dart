@@ -10,7 +10,13 @@ class TestService {
       {int? templateId, required List<AnswersCompanion> resultAnwers}) async {
     return _database.transaction(() async {
       var test = await _database.into(_database.results).insertReturning(
-          ResultsCompanion.insert(templateId: Value(templateId)));
+            ResultsCompanion.insert(
+              templateId: Value(templateId),
+              date: Value(
+                DateTime.now(),
+              ),
+            ),
+          );
 
       await _database.batch((batch) async {
         batch.insertAll(

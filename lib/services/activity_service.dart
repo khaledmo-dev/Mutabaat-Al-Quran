@@ -3,7 +3,7 @@ import 'package:drift/drift.dart';
 import 'package:quran_test/app/app.locator.dart';
 import 'package:quran_test/data/database.dart';
 import 'package:quran_test/data/models/models.dart';
-import 'package:quran_test/date_utils.dart';
+import 'package:quran_test/ui/common/date_utils.dart';
 import 'package:rxdart/rxdart.dart';
 
 class ActivityService {
@@ -58,7 +58,7 @@ class ActivityService {
                   t.activityId.equals(activityModel.id) & t.endDate.isNull()))
             .getSingleOrNull();
 
-        var date = DateTime.now();
+        var date = DateTime.now().dateOnly;
 
         if (schedule != null) {
           await (_database.update(activitySchedulesTable)
@@ -72,6 +72,7 @@ class ActivityService {
               ActivitySchedulesCompanion.insert(
                 activityId: activityModel.id,
                 scheduledDays: scheduleDays,
+                startDate: Value(date),
               ),
             );
       },

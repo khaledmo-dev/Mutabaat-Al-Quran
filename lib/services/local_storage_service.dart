@@ -41,12 +41,12 @@ class LocalStorageService
 
   static const String themeKey = 'theme';
 
-  String get theme {
-    return _getFromDisk(themeKey) ?? "light";
+  bool get isDark {
+    return _getFromDisk(themeKey) ?? false;
   }
 
-  set theme(String theme) {
-    _saveToDisk(themeKey, theme);
+  set isDark(bool isDark) {
+    _saveToDisk(themeKey, isDark);
   }
 
   static const String langKey = 'lang';
@@ -67,5 +67,25 @@ class LocalStorageService
 
   set isHijri(bool isHijri) {
     _saveToDisk(isHijriKey, isHijri);
+  }
+
+  static const String hasRatedKey = 'has_rated';
+
+  bool get hasRated {
+    return _getFromDisk(hasRatedKey) ?? false;
+  }
+
+  set hasRated(bool hasRated) {
+    _saveToDisk(hasRatedKey, hasRated);
+  }
+
+  static const String rateLimitDateKey = 'date_limit';
+
+  String? get rateDate {
+    return _getFromDisk(rateLimitDateKey);
+  }
+
+  set rateDate(String? rateDate) {
+    _saveToDisk(rateLimitDateKey, rateDate);
   }
 }

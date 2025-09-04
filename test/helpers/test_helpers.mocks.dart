@@ -1183,23 +1183,17 @@ class MockLocalStorageService extends _i1.Mock
       );
 
   @override
-  String get theme => (super.noSuchMethod(
-        Invocation.getter(#theme),
-        returnValue: _i5.dummyValue<String>(
-          this,
-          Invocation.getter(#theme),
-        ),
-        returnValueForMissingStub: _i5.dummyValue<String>(
-          this,
-          Invocation.getter(#theme),
-        ),
-      ) as String);
+  bool get isDark => (super.noSuchMethod(
+        Invocation.getter(#isDark),
+        returnValue: false,
+        returnValueForMissingStub: false,
+      ) as bool);
 
   @override
-  set theme(String? theme) => super.noSuchMethod(
+  set isDark(bool? isDark) => super.noSuchMethod(
         Invocation.setter(
-          #theme,
-          theme,
+          #isDark,
+          isDark,
         ),
         returnValueForMissingStub: null,
       );
@@ -1238,6 +1232,31 @@ class MockLocalStorageService extends _i1.Mock
         Invocation.setter(
           #isHijri,
           isHijri,
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  bool get hasRated => (super.noSuchMethod(
+        Invocation.getter(#hasRated),
+        returnValue: false,
+        returnValueForMissingStub: false,
+      ) as bool);
+
+  @override
+  set hasRated(bool? hasRated) => super.noSuchMethod(
+        Invocation.setter(
+          #hasRated,
+          hasRated,
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  set rateDate(String? rateDate) => super.noSuchMethod(
+        Invocation.setter(
+          #rateDate,
+          rateDate,
         ),
         returnValueForMissingStub: null,
       );

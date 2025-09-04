@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:iconly/iconly.dart';
+import 'package:heroicons/heroicons.dart';
 
 class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
   const BaseAppBar({
@@ -20,19 +20,15 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
     bool isEnglish = Localizations.localeOf(context).languageCode == 'en';
 
     return AppBar(
-      toolbarHeight: 56,
-      backgroundColor: Colors.white,
-      foregroundColor: Colors.black,
-      elevation: 0,
-      bottom: PreferredSize(
-        preferredSize: const Size.fromHeight(1.0),
-        child: Container(
-          color: const Color(0xFFE3E3E3), // Border color
-          height: 1.0,
-        ),
-      ),
       title: title,
       centerTitle: true,
+      bottom: PreferredSize(
+        preferredSize: const Size.fromHeight(0.5),
+        child: Container(
+          color: Theme.of(context).colorScheme.outline, // Border color
+          height: .5,
+        ),
+      ),
       actions: actions?.map((e) => Center(child: e)).toList(),
       leading: enableLeading
           ? Center(
@@ -41,10 +37,11 @@ class BaseAppBar extends StatelessWidget implements PreferredSizeWidget {
                     onPressed: () {
                       Navigator.of(context).pop();
                     },
-                    icon: Icon(
+                    icon: HeroIcon(
                       isEnglish
-                          ? IconlyBold.arrow_left_square
-                          : IconlyBold.arrow_right_square,
+                          ? HeroIcons.arrowLeftCircle
+                          : HeroIcons.arrowRightCircle,
+                      style: HeroIconStyle.solid,
                     ),
                   ),
             )

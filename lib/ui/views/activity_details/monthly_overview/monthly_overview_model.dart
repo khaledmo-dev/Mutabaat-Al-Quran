@@ -1,7 +1,7 @@
 import 'package:jhijri/_src/_jHijri.dart';
 import 'package:quran_test/app/app.locator.dart';
 import 'package:quran_test/data/models/models.dart';
-import 'package:quran_test/date_utils.dart';
+import 'package:quran_test/ui/common/date_utils.dart';
 import 'package:quran_test/services/activity_service.dart';
 import 'package:quran_test/services/local_storage_service.dart';
 import 'package:stacked/stacked.dart';
@@ -29,7 +29,7 @@ class MonthlyOverviewModel extends StreamViewModel<List<SlotModel>> {
     int missedDay = 0;
     int completedDays = 0;
 
-    for (var slot in data!) {
+    for (var slot in data!.where((e) => e.date.month == _currentMonth.month)) {
       if (slot.status == SlotStatus.missed) {
         missedDay++;
       } else if (slot.status == SlotStatus.completed) {

@@ -2,7 +2,7 @@ import 'package:collection/collection.dart';
 import 'package:drift/drift.dart';
 import 'package:quran_test/app/app.locator.dart';
 import 'package:quran_test/data/database.dart';
-import 'package:quran_test/date_utils.dart';
+import 'package:quran_test/ui/common/date_utils.dart';
 import 'package:rxdart/rxdart.dart';
 
 import '../data/models/models.dart';

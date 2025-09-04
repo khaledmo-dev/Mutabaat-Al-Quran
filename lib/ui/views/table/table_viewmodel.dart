@@ -6,7 +6,7 @@ import 'package:quran_test/app/app.router.dart';
 import 'package:quran_test/data/models/activity.dart';
 import 'package:quran_test/services/local_storage_service.dart';
 import 'package:quran_test/services/table_service.dart';
-import 'package:quran_test/date_utils.dart';
+import 'package:quran_test/ui/common/date_utils.dart';
 import 'package:quran_test/ui/common/app_colors.dart';
 import 'package:stacked/stacked.dart';
 import 'package:intl/intl.dart';

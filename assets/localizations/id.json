@@ -69,5 +69,17 @@
   "day_4": "Kamis",
   "day_5": "Jumat",
   "day_6": "Sabtu",
-  "day_7": "Minggu"
+  "day_7": "Minggu",
+  "export_backup": "Ekspor Cadangan",
+  "import_backup": "Impor Cadangan",
+  "backup": "Cadangan",
+  "more": "Lainnya",
+  "import_backup_message": "Apakah Anda ingin menghapus data lama atau menyimpannya?",
+  "keep_data": "Simpan",
+  "delete_data": "Hapus",
+  "rate_message": "Apakah Anda menikmati aplikasinya? Silakan beri kami rating di App Store. Masukan Anda membantu kami untuk lebih baik. Jazakumullahu Khairan!",
+  "rate_now": "Beri Nilai Sekarang",
+  "later": "Nanti",
+  "share_app": "Bagikan aplikasi",
+  "share_message": "Saya menggunakan aplikasi ini untuk melacak progres tilawah dan hafalan Al-Qur’an saya. Sangat membantu agar tetap konsisten dan termotivasi. Coba juga, insyaaAllah!"
 }

@@ -37,7 +37,7 @@ class BaseButton extends StatelessWidget {
         ? MaterialButton(
             minWidth: width,
             shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
             padding: EdgeInsets.zero,
             onPressed: () {
               if (!isLoading) {
@@ -48,7 +48,7 @@ class BaseButton extends StatelessWidget {
               width: width,
               decoration: BoxDecoration(
                 border: Border.all(color: const Color(0xffD3180C)),
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(4),
               ),
               child: Container(
                 constraints: BoxConstraints(
@@ -76,7 +76,7 @@ class BaseButton extends StatelessWidget {
         : MaterialButton(
             minWidth: width,
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(4),
             ),
             padding: EdgeInsets.zero,
             onPressed: () {
@@ -103,7 +103,7 @@ class BaseButton extends StatelessWidget {
                               ],
                             ),
                 border: isFilled ? null : Border.all(color: kcPrimaryColor),
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(4),
               ),
               child: Container(
                 constraints: BoxConstraints(

@@ -17,6 +17,7 @@ import 'package:quran_test/services/result_service.dart';
 import 'package:quran_test/services/template_service.dart';
 import 'package:quran_test/services/localization_service.dart';
 import 'package:quran_test/services/local_storage_service.dart';
+import 'package:quran_test/ui/views/more/more_view.dart';
 // @stacked-import
 
 @StackedApp(
@@ -29,6 +30,7 @@ import 'package:quran_test/services/local_storage_service.dart';
     MaterialRoute(page: ResultsView),
     MaterialRoute(page: ResultDetailsView),
     MaterialRoute(page: ActivityDetailsView),
+    MaterialRoute(page: MoreView),
 // @stacked-route
   ],
   dependencies: [
@@ -49,7 +51,7 @@ import 'package:quran_test/services/local_storage_service.dart';
   // ],
   dialogs: [
     StackedDialog(classType: InfoAlertDialog),
-    // @stacked-dialog
+// @stacked-dialog
   ],
 )
 class App {}

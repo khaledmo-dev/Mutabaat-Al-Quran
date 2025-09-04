@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:quran_test/app/app.locator.dart';
-import 'package:quran_test/services/local_storage_service.dart';
 
-bool get isLightTheme => locator<LocalStorageService>().theme == 'light';
+const Color kcSuccessColor = Color(0xFF16A34A); // main
+const Color kcErrorColor = Color(0xFFDC2626); // main
 
-const Color kcPrimaryColorDark = Color(0xff0E8D77);
-const Color kcPrimaryColorLight = Color(0xff14B8A6);
+// const Color kcPrimaryColorDark = Color(0xff0E8D77);
+// const Color kcPrimaryColorLight = Color(0xff14B8A6);
 
 const Color kcPrimaryColor = Color(0xFF685634);
 const Color kcLightGrey = Color.fromARGB(255, 187, 187, 187);

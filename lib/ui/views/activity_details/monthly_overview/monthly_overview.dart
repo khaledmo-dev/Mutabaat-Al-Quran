@@ -4,7 +4,7 @@ import 'package:quran_test/data/models/models.dart';
 import 'package:quran_test/services/localization_service.dart';
 import 'package:quran_test/ui/common/app_colors.dart';
 import 'package:quran_test/ui/common/ui_helpers.dart';
-import 'package:quran_test/date_utils.dart';
+import 'package:quran_test/ui/common/date_utils.dart';
 import 'package:stacked/stacked.dart';
 
 import 'monthly_overview_model.dart';
@@ -39,8 +39,8 @@ class MonthlyOverview extends StackedView<MonthlyOverviewModel> {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        border: Border.all(color: Colors.blueGrey.withValues(alpha: .2)),
-        borderRadius: BorderRadius.circular(12.0),
+        border: Border.all(color: Theme.of(context).colorScheme.outline),
+        borderRadius: BorderRadius.circular(4.0),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -49,23 +49,24 @@ class MonthlyOverview extends StackedView<MonthlyOverviewModel> {
             Text(
               '${"commitment_percentage".translate()} :${viewModel.consistencyRate.toStringAsFixed(1)}%',
             ),
-            Divider(color: Colors.blueGrey.withValues(alpha: .2))
+            Divider(color: Theme.of(context).colorScheme.outline)
           ],
           // Month navigation
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 8.0),
             child: Row(
-              // textDirection: TextDirection.ltr,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(16.0),
-                    color: const Color.fromARGB(16, 0, 0, 0),
-                  ),
-                  child: IconButton(
-                    icon: const Icon(Icons.chevron_left),
-                    onPressed: viewModel.nextMonth,
+                InkWell(
+                  onTap: viewModel.nextMonth,
+                  borderRadius: BorderRadius.circular(4.0),
+                  child: Ink(
+                    padding: const EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(4.0),
+                      color: Theme.of(context).inputDecorationTheme.fillColor,
+                    ),
+                    child: const Icon(Icons.chevron_left),
                   ),
                 ),
                 Column(
@@ -88,14 +89,16 @@ class MonthlyOverview extends StackedView<MonthlyOverviewModel> {
                     ),
                   ],
                 ),
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(16.0),
-                    color: const Color.fromARGB(16, 0, 0, 0),
-                  ),
-                  child: IconButton(
-                    icon: const Icon(Icons.chevron_right),
-                    onPressed: viewModel.prevMonth,
+                InkWell(
+                  onTap: viewModel.prevMonth,
+                  borderRadius: BorderRadius.circular(4.0),
+                  child: Ink(
+                    padding: const EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(4.0),
+                      color: Theme.of(context).inputDecorationTheme.fillColor,
+                    ),
+                    child: const Icon(Icons.chevron_right),
                   ),
                 ),
               ],
@@ -119,10 +122,12 @@ class MonthlyOverview extends StackedView<MonthlyOverviewModel> {
                 )
                 .toList(),
           ),
+          verticalSpaceSmall,
           const Calendar(),
-          Divider(
-            color: Colors.blueGrey.withValues(alpha: .2),
-          ),
+          if (viewModel.selectedSlot?.entries.isNotEmpty == true)
+            Divider(
+              color: Theme.of(context).colorScheme.outline,
+            ),
           if (viewModel.selectedSlot != null)
             Wrap(
               alignment: WrapAlignment.start,
@@ -140,7 +145,7 @@ class MonthlyOverview extends StackedView<MonthlyOverviewModel> {
                   }
                   return Container(
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
+                      borderRadius: BorderRadius.circular(4),
                       border: const Border(
                         top: BorderSide(width: 1, color: kcPrimaryColor),
                         right: BorderSide(width: 1, color: kcPrimaryColor),
@@ -243,24 +248,43 @@ class Calendar extends ViewModelWidget<MonthlyOverviewModel> {
           }
 
           if (!isCurrentMonth) {
-            return Colors.grey[400];
+            return Colors.grey;
           }
 
           return null;
         }
 
+        Color getBorderColor() {
+          if (slot.status == SlotStatus.completed) {
+            return kcSuccessColor;
+          }
+          if (slot.status == SlotStatus.missed) {
+            return kcErrorColor;
+          }
+          if (slot.entries.isNotEmpty) {
+            return Colors.amber;
+          }
+
+          return Colors.transparent;
+        }
+
         Color? dayBackgroundColor() {
           if (slot.status == SlotStatus.completed) {
-            return Colors.green.withValues(alpha: isCurrentMonth ? 1 : .3);
+            if (slot == viewModel.selectedSlot) {
+              return kcSuccessColor;
+            }
+            return kcSuccessColor.withValues(alpha: .2);
           }
 
           if (slot.status == SlotStatus.missed) {
-            return Colors.red.withValues(alpha: isCurrentMonth ? 1 : .3);
+            return slot == viewModel.selectedSlot
+                ? kcErrorColor
+                : kcErrorColor.withValues(alpha: .2);
           }
 
           if (slot.entries.isNotEmpty) {
             return Colors.amber.withValues(
-              alpha: viewModel.selectedSlot == slot ? 1 : .3,
+              alpha: viewModel.selectedSlot == slot ? 1 : .2,
             );
           }
 
@@ -299,7 +323,8 @@ class Calendar extends ViewModelWidget<MonthlyOverviewModel> {
                 margin: const EdgeInsets.all(4),
                 decoration: BoxDecoration(
                   color: dayBackgroundColor(),
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: BorderRadius.circular(4),
+                  border: Border.all(color: getBorderColor()),
                 ),
                 alignment: Alignment.center,
                 child: Text(

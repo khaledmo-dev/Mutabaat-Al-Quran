@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:iconly/iconly.dart';
+import 'package:heroicons/heroicons.dart';
 import 'package:quran_test/services/localization_service.dart';
 import 'package:quran_test/ui/common/app_bar.dart';
 import 'package:quran_test/ui/common/app_colors.dart';
 import 'package:quran_test/ui/common/ui_helpers.dart';
 import 'package:quran_test/ui/views/activity_details/monthly_overview/monthly_overview.dart';
 import 'package:quran_test/ui/views/table/widgets/activity_form.dart';
-import 'package:quran_test/date_utils.dart';
+import 'package:quran_test/ui/common/date_utils.dart';
 import 'package:stacked/stacked.dart';
 
 import 'activity_details_viewmodel.dart';
@@ -27,37 +27,32 @@ class ActivityDetailsView extends StackedView<ActivityDetailsViewModel> {
           IconButton(
             onPressed: () {
               showModalBottomSheet(
-                backgroundColor: Colors.white,
                 isScrollControlled: true,
-                shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(20),
-                    topRight: Radius.circular(20),
-                  ),
-                ),
+                shape: const RoundedRectangleBorder(),
                 context: context,
                 builder: (context) {
                   return ActivityForm(activity: viewModel.data);
                 },
               );
             },
-            icon: const Icon(
-              IconlyBold.edit,
+            icon: const HeroIcon(
+              HeroIcons.pencil,
               color: Colors.amber,
+              style: HeroIconStyle.solid,
             ),
           ),
           IconButton(
             onPressed: () {
               viewModel.deleteRecord(id);
             },
-            icon: const Icon(
-              IconlyBold.delete,
-              color: Colors.red,
+            icon: const HeroIcon(
+              HeroIcons.trash,
+              color: kcErrorColor,
+              style: HeroIconStyle.solid,
             ),
           )
         ],
       ),
-      backgroundColor: Colors.white,
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
         child: Column(
@@ -82,14 +77,14 @@ class ActivityDetailsView extends StackedView<ActivityDetailsViewModel> {
                   var value = e;
                   return Container(
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
+                      borderRadius: BorderRadius.circular(4),
                       border: const Border(
                         top: BorderSide(width: 1, color: kcPrimaryColor),
                         right: BorderSide(width: 1, color: kcPrimaryColor),
                         bottom: BorderSide(width: 2, color: kcPrimaryColor),
                         left: BorderSide(width: 1, color: kcPrimaryColor),
                       ),
-                      color: Colors.transparent,
+                      color: kcPrimaryColor.withValues(alpha: .1),
                     ),
                     child: Padding(
                       padding: const EdgeInsets.all(8),
@@ -99,7 +94,6 @@ class ActivityDetailsView extends StackedView<ActivityDetailsViewModel> {
                           Text(
                             value.label,
                             style: const TextStyle(
-                              color: kcPrimaryColor,
                               fontWeight: FontWeight.bold,
                               fontSize: 12,
                             ),

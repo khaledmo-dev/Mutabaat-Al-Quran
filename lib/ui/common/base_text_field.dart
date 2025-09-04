@@ -49,7 +49,7 @@ class BaseTextField extends StatelessWidget {
     var responsiveSize = 24 * (screenWidth(context) / 4) / 100;
     var theme = Theme.of(context);
     final circularBorder = OutlineInputBorder(
-      borderRadius: BorderRadius.circular(10),
+      borderRadius: BorderRadius.circular(4),
     );
 
     return SizedBox(
@@ -108,19 +108,24 @@ class BaseTextField extends StatelessWidget {
                     color: kcPrimaryColor,
                   ),
             filled: filled,
-            fillColor: kcVeryLightGrey,
+            // fillColor: kcVeryLightGrey,
             border: circularBorder.copyWith(
-              borderSide: const BorderSide(color: kcLightGrey),
-            ),
-            errorBorder: circularBorder.copyWith(
-              borderSide: const BorderSide(color: Colors.red),
-            ),
-            focusedBorder: circularBorder.copyWith(
-              borderSide: const BorderSide(color: kcPrimaryColor),
+              borderSide:
+                  BorderSide(color: Theme.of(context).colorScheme.outline),
             ),
             enabledBorder: circularBorder.copyWith(
-              borderSide: const BorderSide(color: kcVeryLightGrey),
+              borderSide:
+                  BorderSide(color: Theme.of(context).colorScheme.outline),
             ),
+            // errorBorder: circularBorder.copyWith(
+            //   borderSide: const BorderSide(color: Colors.red),
+            // ),
+            // focusedBorder: circularBorder.copyWith(
+            //   borderSide: const BorderSide(color: kcPrimaryColor),
+            // ),
+            // enabledBorder: circularBorder.copyWith(
+            //   borderSide: const BorderSide(color: kcVeryLightGrey),
+            // ),
           ),
         ),
       ),

@@ -5,7 +5,7 @@ import 'package:quran_test/services/localization_service.dart';
 import 'package:quran_test/ui/common/app_colors.dart';
 import 'package:quran_test/ui/common/ui_helpers.dart';
 import 'package:quran_test/ui/views/table/table_viewmodel.dart';
-import 'package:quran_test/date_utils.dart';
+import 'package:quran_test/ui/common/date_utils.dart';
 import 'package:stacked/stacked.dart';
 
 class DatesColumn extends ViewModelWidget<TableViewModel> {
@@ -13,6 +13,7 @@ class DatesColumn extends ViewModelWidget<TableViewModel> {
 
   @override
   Widget build(BuildContext context, TableViewModel viewModel) {
+    var outline = Theme.of(context).colorScheme.outline;
     return ValueListenableBuilder(
       valueListenable: languageNotifier,
       builder: (context, value, child) {
@@ -40,14 +41,12 @@ class DatesColumn extends ViewModelWidget<TableViewModel> {
                             color: isToday ? kcPrimaryColor : null,
                             border: BorderDirectional(
                               bottom: BorderSide(
-                                color: const Color(0xffE3E3E3),
+                                color: outline,
                                 width: index == 6 ? 0 : 1,
                               ),
-                              end: const BorderSide(
-                                color: Color(0xffE3E3E3),
-                              ),
+                              end: BorderSide(color: outline),
                               top: BorderSide(
-                                color: const Color(0xffE3E3E3),
+                                color: outline,
                                 width: index == 0 ? 1 : 0,
                               ),
                             ),

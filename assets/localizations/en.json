@@ -69,5 +69,17 @@
     "day_4": "Thursday",
     "day_5": "Friday",
     "day_6": "Saturday",
-    "day_7": "Sunday"
+    "day_7": "Sunday",
+    "export_backup": "Export Backup",
+    "import_backup": "Import Backup",
+    "backup": "Backup",
+    "more": "More",
+    "import_backup_message": "Do you want to delete the old data or keep it?",
+    "keep_data": "Keep",
+    "delete_data": "Delete",
+    "rate_message": "Enjoying the app? Please rate us on the App Store. Your feedback helps us improve. Jazakum Allahu Khairan!",
+    "rate_now": "Rate Now !",
+    "later": "Later",
+    "share_app": "Share the app",
+    "share_message": "I’m using this amazing app to track my Qur’an progress. It helps me stay consistent and motivated. You should try it too, in shaa Allah!"
 }

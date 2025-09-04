@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:iconly/iconly.dart';
+import 'package:heroicons/heroicons.dart';
 import 'package:quran_test/app/app.locator.dart';
 import 'package:quran_test/services/localization_service.dart';
 import 'package:quran_test/services/template_service.dart';
@@ -134,7 +134,11 @@ class WarningBanner extends StatelessWidget {
       ),
       child: Row(
         children: [
-          const Icon(IconlyBold.info_square, color: Colors.amber),
+          const HeroIcon(
+            HeroIcons.informationCircle,
+            color: Colors.amber,
+            style: HeroIconStyle.solid,
+          ),
           const SizedBox(width: 12),
           Expanded(
             child: Text(
