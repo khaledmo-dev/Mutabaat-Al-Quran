@@ -46,6 +46,7 @@ dependencies:
   share_plus: ^10.0.0
   file_picker: ^10.3.2
   another_flushbar: ^1.12.31
+  upgrader: ^11.5.0
 
 
 dev_dependencies:

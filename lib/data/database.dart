@@ -273,7 +273,7 @@ class Database extends _$Database {
 
     var result = await FilePicker.platform.saveFile(
       dialogTitle: 'Save your backup',
-      fileName: 'backup_${DateTime.now().formatDate}.xlsx',
+      fileName: 'backup_${DateTime.now().formatDate()}.xlsx',
       bytes: await file.readAsBytes(),
     );
 

@@ -89,5 +89,6 @@
     "success": "Done successfully.",
     "error": "Something went wrong.",
     "choose_lang": "Choose Language",
-    "dark_theme": "Dark Theme"
+    "dark_theme": "Dark Theme",
+    "hijri_date": "Hijri Date"
 }

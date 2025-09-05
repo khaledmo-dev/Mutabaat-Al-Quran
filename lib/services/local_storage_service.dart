@@ -67,6 +67,7 @@ class LocalStorageService
 
   set isHijri(bool isHijri) {
     _saveToDisk(isHijriKey, isHijri);
+    notifyListeners();
   }
 
   static const String isFirstOpenKey = 'is_first';

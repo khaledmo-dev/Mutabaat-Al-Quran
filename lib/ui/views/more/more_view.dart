@@ -11,11 +11,9 @@ import 'package:quran_test/services/localization_service.dart';
 import 'package:quran_test/ui/common/app_bar.dart';
 import 'package:quran_test/ui/common/app_colors.dart';
 import 'package:quran_test/ui/common/ui_helpers.dart';
-import 'package:quran_test/ui/views/home/home_viewmodel.dart';
-import 'package:share_plus/share_plus.dart';
+// import 'package:quran_test/ui/views/home/home_viewmodel.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import 'more_viewmodel.dart';
 
@@ -30,12 +28,49 @@ class MoreView extends StackedView<MoreViewModel> {
   ) {
     return Scaffold(
       appBar: BaseAppBar(title: Text("more".translate()), enableLeading: false),
-      body: Container(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.only(left: 25.0, right: 25.0),
         child: Column(
           spacing: 16,
           children: [
-            verticalSpaceSmall,
+            const SizedBox.shrink(),
+            IntrinsicHeight(
+              child: Row(
+                children: [
+                  Expanded(
+                    child: MoreTile(
+                      title: "share_app".translate(),
+                      icon: const HeroIcon(
+                        HeroIcons.share,
+                        style: HeroIconStyle.solid,
+                        color: Colors.white,
+                      ),
+                      height: double.infinity,
+                      color: const Color(0xFF3B82F6),
+                      onTap: () {
+                        viewModel.share();
+                      },
+                    ),
+                  ),
+                  horizontalSpaceSmall,
+                  Expanded(
+                    child: MoreTile(
+                      title: "rate_now".translate(),
+                      icon: const HeroIcon(
+                        HeroIcons.star,
+                        style: HeroIconStyle.solid,
+                        color: Colors.white,
+                      ),
+                      color: const Color(0xFFF59E0B),
+                      height: double.infinity,
+                      onTap: () {
+                        viewModel.rate();
+                      },
+                    ),
+                  )
+                ],
+              ),
+            ),
             InkWell(
               onTap: () {
                 viewModel.toggleTheme();
@@ -67,6 +102,7 @@ class MoreView extends StackedView<MoreViewModel> {
                             HeroIcons.moon,
                             style: HeroIconStyle.solid,
                             color: kcPrimaryColor,
+                            size: 28,
                           ),
                         ),
                         horizontalSpaceSmall,
@@ -81,6 +117,68 @@ class MoreView extends StackedView<MoreViewModel> {
                         scale: .9,
                         child: CupertinoSwitch(
                           value: viewModel.isDark,
+                          activeTrackColor: kcPrimaryColor,
+                          onChanged: (value) {},
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            InkWell(
+              onTap: () {
+                viewModel.toggleDate();
+              },
+              borderRadius: BorderRadius.circular(4.0),
+              child: Ink(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 12.0,
+                  horizontal: 12.0,
+                ),
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  border:
+                      Border.all(color: Theme.of(context).colorScheme.outline),
+                  borderRadius: BorderRadius.circular(4.0),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.all(6),
+                          decoration: BoxDecoration(
+                            color: kcPrimaryColor.withValues(alpha: .1),
+                            borderRadius: BorderRadius.circular(2.0),
+                          ),
+                          child: ShaderMask(
+                            shaderCallback: (bounds) => const LinearGradient(
+                              colors: [
+                                kcPrimaryColor,
+                                kcPrimaryColor,
+                              ],
+                            ).createShader(bounds),
+                            blendMode: BlendMode.srcIn,
+                            child: Image.asset(
+                              "assets/calendar.png",
+                              height: 28,
+                            ),
+                          ),
+                        ),
+                        horizontalSpaceSmall,
+                        Text(
+                          "hijri_date".translate(),
+                          style: const TextStyle(fontSize: 16),
+                        ),
+                      ],
+                    ),
+                    IgnorePointer(
+                      child: Transform.scale(
+                        scale: .9,
+                        child: CupertinoSwitch(
+                          value: viewModel.isHijri,
                           activeTrackColor: kcPrimaryColor,
                           onChanged: (value) {},
                         ),
@@ -109,32 +207,6 @@ class MoreView extends StackedView<MoreViewModel> {
               },
             ),
             MoreTile(
-              title: "share_app".translate(),
-              icon: const HeroIcon(
-                HeroIcons.share,
-                style: HeroIconStyle.solid,
-                color: kcPrimaryColor,
-              ),
-              onTap: () {
-                Share.share(
-                    "${"share_message".translate()}\n https://play.google.com/store/apps/details?id=com.mutabaat.quran");
-              },
-            ),
-            MoreTile(
-              title: "rate_now".translate(),
-              icon: const HeroIcon(
-                HeroIcons.star,
-                style: HeroIconStyle.solid,
-                color: kcPrimaryColor,
-              ),
-              onTap: () {
-                launchUrl(
-                    Uri.parse(
-                        "https://play.google.com/store/apps/details?id=com.mutabaat.quran"),
-                    mode: LaunchMode.externalApplication);
-              },
-            ),
-            MoreTile(
               title: "contact_us".translate(),
               icon: const HeroIcon(
                 HeroIcons.envelope,
@@ -142,13 +214,13 @@ class MoreView extends StackedView<MoreViewModel> {
                 color: kcPrimaryColor,
               ),
               onTap: () {
-                launchUrl(Uri.parse('https://wa.me/201099107801'));
+                viewModel.contactUs();
               },
             ),
             MoreTile(
               title: "results".translate(),
               icon: const HeroIcon(
-                HeroIcons.document,
+                HeroIcons.documentText,
                 style: HeroIconStyle.solid,
                 color: kcPrimaryColor,
               ),
@@ -194,6 +266,7 @@ class MoreTile extends StatelessWidget {
     required this.icon,
     required this.onTap,
     this.color,
+    this.height,
   });
   final String title;
   final Widget icon;
@@ -201,6 +274,7 @@ class MoreTile extends StatelessWidget {
 
   final Color? color;
 
+  final double? height;
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -211,9 +285,13 @@ class MoreTile extends StatelessWidget {
       child: Ink(
         padding: const EdgeInsetsDirectional.all(12.0),
         decoration: BoxDecoration(
-          border: Border.all(color: Theme.of(context).colorScheme.outline),
+          border: color != null
+              ? null
+              : Border.all(color: Theme.of(context).colorScheme.outline),
           borderRadius: BorderRadius.circular(4.0),
+          color: color,
         ),
+        height: height,
         child: Row(
           children: [
             Container(
@@ -228,8 +306,10 @@ class MoreTile extends StatelessWidget {
             Expanded(
               child: Text(
                 title,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 16,
+                  color: color != null ? Colors.white : null,
+                  fontWeight: color != null ? FontWeight.bold : null,
                 ),
               ),
             )
@@ -282,6 +362,7 @@ class BackupSheet extends StatelessWidget {
                   flashMessageService.showMessage(
                     title: "success".translate(),
                     message: 'export_success'.translate(),
+                    type: FlashMessageType.success,
                   );
                 } else {
                   flashMessageService.showMessage(
@@ -318,6 +399,7 @@ class BackupSheet extends StatelessWidget {
                     flashMessageService.showMessage(
                       title: "success".translate(),
                       message: 'import_success'.translate(),
+                      type: FlashMessageType.success,
                     );
                   } else {
                     flashMessageService.showMessage(
@@ -371,7 +453,6 @@ class _SetLanguageSheetState extends State<SetLanguageSheet> {
             return GestureDetector(
               onTap: () async {
                 await locator<LocalizationService>().changeLanguage(l.code);
-                HomeViewModel().rebuildUi();
 
                 setState(() {
                   lang = l.code;

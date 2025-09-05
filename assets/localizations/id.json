@@ -89,5 +89,6 @@
   "success": "Berhasil.",
   "error": "Terjadi kesalahan.",
   "choose_lang": "Pilih Bahasa",
-  "dark_theme": "Tema Gelap"
+  "dark_theme": "Tema Gelap",
+  "hijri_date": "Tanggal Hijriah"
 }
